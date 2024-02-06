@@ -45,7 +45,10 @@ y_initial = lambda x: 0  # TODO: make this a real value
 y_final = lambda y: 1  # TODO: make this a real value
 integral_of_g_squared = integrate.dblquad(g_squared, x_initial, x_final, y_initial, y_final)  # TODO: give this units
 
+
+# D10
 E_laser = c * epsilon_0 * electric_field_strength / 2 * integral_of_u_squared * integral_of_g_squared
 
+# D11
 psi_v = lambda x, y: -alpha * E_laser * (lambda_laser ** 2) * g_squared(x, y) / \
                      (2 * np.pi * (1 + beta) * E_e * integral_of_g_squared)
