@@ -17,3 +17,6 @@ electron_mass = physics_constants.electron_mass
 
 # units: kg * m**2 / s**2
 rest_mass_energy = electron_mass * (speed_of_light ** 2)
+
+# units: kg * m**2 / s
+hbar = physics_constants.hbar

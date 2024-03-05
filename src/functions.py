@@ -110,3 +110,5 @@ def make_2d_gaussian(mu_x, mu_y, sigma_x, sigma_y):
         return normalization * np.exp(exponent)
 
     return gaussian_2d
+
+

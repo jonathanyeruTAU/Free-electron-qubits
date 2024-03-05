@@ -43,4 +43,4 @@ def integrate_g(g):
     x_final = 1
     y_initial = lambda x: 0
     y_final = lambda y: 1
-    return integrate.dblquad(square_g, x_initial, x_final, y_initial, y_final)
+    return integrate.dblquad(square_g, x_initial, x_final, y_initial, y_final)[0]
