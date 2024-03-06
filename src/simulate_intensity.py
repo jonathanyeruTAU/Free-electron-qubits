@@ -18,6 +18,8 @@ def simulate_intensity_electron_wave_function(intensity_function):
             print("j", j)
             Z[i][j] = intensity_function(x_value, y_value)
 
+    print(Z)
+
     fig = plt.figure()
 
     ax = fig.add_subplot(111, projection='3d')

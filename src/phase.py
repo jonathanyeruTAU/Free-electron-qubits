@@ -4,7 +4,7 @@ from src.constants import fine_structure, rest_mass_energy
 from scipy import integrate
 
 
-def phase(x, y, v, E_L, lambda_L, g):
+def phase(x, y, v, E_L, lambda_L, g, integral_of_g_squared):
     """
     gives the phase of the electron in the xy plane, given a velocity v.
     :param x: x position  - normalized
@@ -25,16 +25,17 @@ def phase(x, y, v, E_L, lambda_L, g):
     electron_phase *= lambda_L_electron_frame(lambda_L, v) ** 2
 
     square_g = square_f(g)
-    electron_phase *= square_g(x, y) / integrate_g(g)
+    electron_phase *= square_g(x, y) / integral_of_g_squared
     return electron_phase
 
 
-def phase_func(v, E_L, lambda_L, g):
+def phase_func(v, E_L, lambda_L, g, integral_of_g_squared):
     """
     same as the phase function above, but this one returns a function that accepts x and y are retruns the same output
     as the function above
     """
-    return lambda x, y: phase(x=x, y=y, v=v, E_L=E_L, lambda_L=lambda_L, g=g)
+    return lambda x, y: phase(x=x, y=y, v=v, E_L=E_L, lambda_L=lambda_L, g=g,
+                              integral_of_g_squared=integral_of_g_squared)
 
 
 def integrate_g(g):
