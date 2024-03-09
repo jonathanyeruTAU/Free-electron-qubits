@@ -60,13 +60,9 @@ def intensity_of_electron_with_rho_s_alpha_s(R, d, k, d_c, phase_func, rho_s, al
 
     def integrate_over_zeta(theta):
         all_roots = multi_root(f=F_deriv, bracket=[0, 1], args=(theta,))
-        print("all roots:", all_roots)
 
         def stationary_phase_argument(zeta_n):
-            deriv = derivative(F_deriv, zeta_n, args=(theta,), n=2, dx=10e-6)
-            print("deriv:", deriv)
             function = np.sqrt(2 * np.pi * 1j / derivative(F_deriv, zeta_n, args=(theta,), n=2))
-            print("function:", function)
             return function * np.exp(1j * F(zeta_n, theta))
 
         return np.sum(stationary_phase_argument(zeta_n=all_roots))

@@ -8,8 +8,8 @@ def simulate_intensity_electron_wave_function(intensity_function):
     need to enter single values, not numpy array
     :return:
     """
-    x = np.linspace(0, 1, 10)
-    y = np.linspace(0, 1, 10)
+    x = np.linspace(-1, 1, 10)
+    y = np.linspace(-1, 1, 10)
     X, Y = np.meshgrid(x, y)
     Z = np.zeros_like(X)
     for x_row, y_row, i in zip(X, Y, range(len(X))):

@@ -26,6 +26,15 @@ def k(v):
     return gamma(v) * electron_mass * v / hbar
 
 
+def v_from_electron_energy(E_e):
+    """
+    :param E_e: units - eV
+    :return: the speed of the electron in m/s
+    """
+    E_e_joules = 1.60217663e-19 * E_e
+    return speed_of_light * (1 - ((electron_mass * speed_of_light**2) / E_e_joules) **2)
+
+
 def E_L_electron_frame(E_L, v):
     """
     laser energy in the electron wave frame
