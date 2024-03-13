@@ -46,7 +46,7 @@ def intensity_of_electron_with_rho_s_alpha_s(R, d, k, d_c, phase_func, rho_s, al
     delta = (d_c - d) / (2 * d_c)
 
     def F(zeta, theta):
-        return kappa * delta * zeta - kappa * np.sqrt(zeta) * np.sin(theta - alpha_s) * rho_s / R * Phase_Func(zeta,
+        return kappa * delta * zeta - kappa * np.sqrt(zeta) * np.sin(theta) * rho_s / R * Phase_Func(zeta,
                                                                                                                theta)
 
     def F_deriv(zeta, theta):
@@ -54,7 +54,7 @@ def intensity_of_electron_with_rho_s_alpha_s(R, d, k, d_c, phase_func, rho_s, al
             zeta[zeta < 0] = 10e-6
         function = 2 * np.sqrt(zeta)
         function *= (kappa * delta + Phase_Func_derivative(zeta, theta))
-        function -= (kappa * np.sin(theta - alpha_s) * rho_s / R)
+        function -= (kappa * np.sin(theta) * rho_s / R)
         return function
 
     def integrate_over_zeta(theta):
@@ -65,7 +65,7 @@ def intensity_of_electron_with_rho_s_alpha_s(R, d, k, d_c, phase_func, rho_s, al
             return function * np.exp(1j * F(zeta_n, theta))
 
         return np.sum(stationary_phase_argument(zeta_n=all_roots))
-    theta = np.linspace(-np.pi, np.pi, 10)
+    theta = np.linspace(-np.pi, np.pi, 30)
     np_integrate_over_zeta = np.vectorize(integrate_over_zeta)
     y = np_integrate_over_zeta(theta)
     return np.abs(integrate.simpson(y, theta)) ** 2
