@@ -8,15 +8,19 @@ def simulate_intensity_electron_wave_function(intensity_function):
     need to enter single values, not numpy array
     :return:
     """
-    x = np.linspace(-1, 1, 10)
-    y = np.linspace(-1, 1, 10)
+    x = np.linspace(-1, 1, 50)
+    y = np.linspace(-1, 1, 50)
     X, Y = np.meshgrid(x, y)
-    Z = np.zeros_like(X)
-    for x_row, y_row, i in zip(X, Y, range(len(X))):
-        print("i", i)
-        for x_value, y_value, j in zip(x_row, y_row, range(len(x_row))):
-            print("j", j)
-            Z[i][j] = intensity_function(x_value, y_value)
+
+    vectorized_intensity_function = np.vectorize(intensity_function)
+    Z = vectorized_intensity_function(X, Y)
+
+    # Z = np.zeros_like(X)
+    # for x_row, y_row, i in zip(X, Y, range(len(X))):
+    #     print("i", i)
+    #     for x_value, y_value, j in zip(x_row, y_row, range(len(x_row))):
+    #         print("j", j)
+    #         Z[i][j] = intensity_function(x_value, y_value)
 
     print(Z)
 

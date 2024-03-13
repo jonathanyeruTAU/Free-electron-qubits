@@ -3,7 +3,7 @@ from src.basic_functions import k, v_from_electron_energy
 from src.functions import make_2d_gaussian
 from src.phase import phase_func, integrate_g
 from src.simulate_intensity import simulate_intensity_electron_wave_function
-
+import numpy as np
 
 def main():
     # units: meter
@@ -16,12 +16,15 @@ def main():
     E_e = 10e3
     # units: m /s
     v = v_from_electron_energy(E_e=E_e)
+
     #units: Joule
     E_L = 10e-6
 
     # units: meter
     lambda_L = 1035 * 10e-9
     electron_wave_number = k(v)
+
+    integral_of_g_squared = integrate_g(g, R)
 
     phase_func_according_to_x_y = phase_func(v=v, E_L=E_L, g=g, lambda_L=lambda_L,
                                              integral_of_g_squared=integral_of_g_squared)
@@ -32,15 +35,20 @@ def main():
     simulate_intensity_electron_wave_function(intensity_of_electron_func)
 
 
+# def g(x, y):
+#     # units: meter
+#     sigma_x = sigma_y = 10e-3
+#     well1 = make_2d_gaussian(mu_x=10e-3 / 2, mu_y=0, sigma_x=sigma_x, sigma_y=sigma_y)
+#     well2 = make_2d_gaussian(mu_x=-10e-3 / 2, mu_y=0, sigma_x=sigma_x, sigma_y=sigma_y)
+#     return well1(x, y) + well2(x, y)
+
 def g(x, y):
     # units: meter
-    sigma_x = sigma_y = 10e-6
-    well1 = make_2d_gaussian(mu_x=1 / 4, mu_y=1 / 4, sigma_x=sigma_x, sigma_y=sigma_y)
-    well2 = make_2d_gaussian(mu_x=3 / 4, mu_y=3 / 4, sigma_x=sigma_x, sigma_y=sigma_y)
-    return well1(x, y) + well2(x, y)
+    rho = np.sqrt(x**2 + y**2)
+    # w_10 = 10e-3
+    # return rho / w_10 * np.exp(-(rho / w_10)**2)
+    return np.exp(rho)
 
-
-integral_of_g_squared = integrate_g(g)
 
 if __name__ == '__main__':
     main()

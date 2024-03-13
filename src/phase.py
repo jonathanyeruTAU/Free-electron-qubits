@@ -38,10 +38,11 @@ def phase_func(v, E_L, lambda_L, g, integral_of_g_squared):
                               integral_of_g_squared=integral_of_g_squared)
 
 
-def integrate_g(g):
+def integrate_g(g, R):
     square_g = square_f(g)
-    x_initial = -1
-    x_final = 1
-    y_initial = lambda x: 0
-    y_final = lambda y: 1
-    return integrate.dblquad(square_g, x_initial, x_final, y_initial, y_final)[0]
+    x_initial = -1 * R
+    x_final = R
+    y_initial = lambda x: -1 * np.sqrt(R**2 - x**2)
+    y_final = lambda x: np.sqrt(R**2 - x**2)
+    integral = integrate.dblquad(square_g, x_initial, x_final, y_initial, y_final)[0]
+    return integral

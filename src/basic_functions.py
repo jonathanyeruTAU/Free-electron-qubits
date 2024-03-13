@@ -4,6 +4,21 @@ import warnings
 from typing import Callable, Iterable
 from scipy.optimize import root_scalar
 
+import time
+from functools import wraps
+
+
+def timer(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f"Function '{func.__name__}' took {end_time - start_time} seconds to run.")
+        return result
+
+    return wrapper
+
 
 def beta(v):
     """
@@ -22,6 +37,14 @@ def gamma(v):
     return 1 / np.sqrt(1 - beta(v) ** 2)
 
 
+def v_given_gamma(gamma):
+    """
+    :param gamma: dimensionless
+    :return: speed: units - meter / second
+    """
+    return speed_of_light * np.sqrt(1 - (1 / (gamma ** 2)))
+
+
 def k(v):
     return gamma(v) * electron_mass * v / hbar
 
@@ -32,7 +55,9 @@ def v_from_electron_energy(E_e):
     :return: the speed of the electron in m/s
     """
     E_e_joules = 1.60217663e-19 * E_e
-    return speed_of_light * (1 - ((electron_mass * speed_of_light**2) / E_e_joules) **2)
+
+    gamma = 1 + E_e_joules / (electron_mass * (speed_of_light ** 2))
+    return v_given_gamma(gamma)
 
 
 def E_L_electron_frame(E_L, v):

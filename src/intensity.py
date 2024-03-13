@@ -1,8 +1,7 @@
 import numpy as np
 from scipy.misc import derivative
-from src.basic_functions import multi_root
+from src.basic_functions import multi_root, timer
 from scipy import integrate
-
 
 def intensity_of_electron_with_rho_s_alpha_s(R, d, k, d_c, phase_func, rho_s, alpha_s):
     """
@@ -66,8 +65,10 @@ def intensity_of_electron_with_rho_s_alpha_s(R, d, k, d_c, phase_func, rho_s, al
             return function * np.exp(1j * F(zeta_n, theta))
 
         return np.sum(stationary_phase_argument(zeta_n=all_roots))
-
-    return np.abs(integrate.quad(integrate_over_zeta, -np.pi, np.pi)[0]) ** 2
+    theta = np.linspace(-np.pi, np.pi, 10)
+    np_integrate_over_zeta = np.vectorize(integrate_over_zeta)
+    y = np_integrate_over_zeta(theta)
+    return np.abs(integrate.simpson(y, theta)) ** 2
 
 
 def intensity_of_electron(R, d, k, d_c, phase_func):
