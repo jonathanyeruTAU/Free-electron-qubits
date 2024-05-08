@@ -25,6 +25,8 @@ def phase(x, y, v, E_L, lambda_L, g, integral_of_g_squared):
     electron_phase *= lambda_L_electron_frame(lambda_L, v) ** 2
 
     square_g = square_f(g)
+    if abs(integral_of_g_squared) < 0.0005:
+        integral_of_g_squared = 0.0005
     electron_phase *= square_g(x, y) / integral_of_g_squared
     return electron_phase
 
