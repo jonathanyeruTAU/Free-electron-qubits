@@ -1,7 +1,6 @@
 import unittest
 from src.basic_functions import gamma, v_given_gamma, multi_root
 
-
 class TestBasicFuncs(unittest.TestCase):
     def setUp(self) -> None:
         pass
