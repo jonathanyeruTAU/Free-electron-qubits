@@ -17,25 +17,26 @@ def main():
 
     x_f = np.linspace(-3 * lambda_e_perpendicular, 3 * lambda_e_perpendicular, 500)
 
-    focus_x = get_function_focus(target_phase=lambda x: 2 * x / R_max, R_max=R_max)
-    plt.plot(x_f, focus_x(x_f), label="2x / R_max")
+    # focus_x = get_function_focus(target_phase=lambda x: 2 * x / R_max, R_max=R_max)
+    # plt.plot(x_f, focus_x(x_f), label="2x / R_max")
+    #
+    # focus_x_plus_1 = get_function_focus(target_phase=lambda x: 2 * (-x + 1) / R_max, R_max=R_max)
+    # plt.plot(x_f, focus_x_plus_1(x_f), label="2(-x+1) / R_max")
 
-    focus_x_plus_1 = get_function_focus(target_phase=lambda x: 2 * (-x + 1) / R_max, R_max=R_max)
-    plt.plot(x_f, focus_x_plus_1(x_f), label="2(-x+1) / R_max")
 
+    # sin_func = lambda x: 2 * x / R_max * np.sin(4 * np.pi * x / R_max)
+    #
+    # focus_sin = get_function_focus(target_phase=sin_func, R_max=R_max)
+    # plt.plot(x_f, focus_sin(x_f), label="2x/Rmax * sin(20*pi*x/Rmax)")
 
-    sin_func = lambda x: 2 * x / R_max * np.sin(20 * np.pi * x / R_max)
-
-    focus_sin = get_function_focus(target_phase=sin_func, R_max=R_max)
-    plt.plot(x_f, focus_sin(x_f), label="2x/Rmax * sin(20*pi*x/Rmax)")
 
     move_by = 0.0000025
-    asymmetric_sin_func = lambda x: 2 * (x + move_by) / R_max * np.sin(20 * np.pi * (x + move_by) / R_max) + 0.2
+    asymmetric_sin_func = lambda x: 2 * (x + move_by) / R_max * np.sin(4 * np.pi * (x + move_by) / R_max) + 0.2
     focus_asymmetric_sin = get_function_focus(target_phase=asymmetric_sin_func, R_max=R_max)
     plt.plot(x_f, focus_asymmetric_sin(x_f), label="asymmetric sin")
 
     # x_sin = np.linspace(-R_max, R_max, 1000)
-    # plt.plot(x_sin, asymetric_sin_func(x_sin))
+    # plt.plot(x_sin, sin_func(x_sin))
 
     plt.grid()
     plt.legend()
