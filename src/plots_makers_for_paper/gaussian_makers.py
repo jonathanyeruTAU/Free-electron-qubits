@@ -3,7 +3,7 @@ import numpy as np
 
 
 def gaussian(mu, sigma):
-    return lambda x: np.exp((-((x - mu) ** 2)) / (2 * sigma ** 2)) / (np.sqrt(2 * np.pi * sigma ** 2))
+    return lambda x: np.exp((-((x - mu) ** 2)) / (2 * sigma ** 2)) / np.sqrt(2 * np.pi * sigma ** 2)
 
 
 def make_01_plots():
