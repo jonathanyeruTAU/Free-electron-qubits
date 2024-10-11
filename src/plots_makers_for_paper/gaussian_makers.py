@@ -17,13 +17,14 @@ def make_01_plots():
     plt.plot(x, left_gaussian(x), label=r"$|0\rangle$")
     plt.plot(x, right_gaussian(x), label=r"$|1\rangle$")
     plt.plot(x, hadamard(x), label=r"$\frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$")
-    plt.grid()
-    plt.legend(loc='best')  # Position legend in the upper left
+    plt.legend(loc='best', fontsize=14)  # Position legend in the upper left
     plt.axhline(0, color='black', linewidth=1)  # Horizontal axis line
     plt.axvline(0, color='black', linewidth=1)  # Vertical axis line
     plt.ylim(0, 1.75)
-    plt.ylabel(r"$|\psi(x)|^2$")
-    plt.xlabel(r"x")
+    plt.ylabel(r"$|\psi(x)|^2/\sigma$", fontsize=14)
+    plt.xlabel(r"$x$", fontsize=14)
+    plt.xticks([-1, 0, 1], [r'$-\mu$', '0', r'$\mu$'])
+    plt.yticks([])
     plt.show()
 
 

@@ -42,34 +42,30 @@ def main():
     plots_data = [
         {
             "input_func": lambda x: 2 * x / R_max,
-            "title": r"$\frac{2x}{R_{max}}$"
         },
         {
             "input_func": lambda x: -2 * x / R_max,
-            "title": r"$-\frac{2x}{R_{max}}$"
         },
         {
             "input_func": lambda x: 2 * x / R_max * np.sin(4 * np.pi * x / R_max),
-            "title": r"$\frac{2x}{R_{max}} \cdot \sin\left(\frac{20\pi x}{R_{max}}\right)$"
         },
         {
             "input_func": lambda x: 2 * (x + move_by) / R_max * np.sin(4 * np.pi * (x + move_by) / R_max) + 0.2,
-            "title": "asymmetric sin"
         }
     ]
     colors = ['blue', 'green', 'red', plt.rcParams['axes.prop_cycle'].by_key()['color'][0]]
 
     tags = ["(a)", "(b)", "(c)", "(d)", "(e)", "(f)", "(g)", "(h)"]
 
-    fig, axs = plt.subplots(4, 2, figsize=(8, 10))
+    fig, axs = plt.subplots(4, 2, figsize=(8, 10), gridspec_kw={'wspace': 0.3})
 
     for i, plot_data in enumerate(plots_data):
         input_func = plot_data["input_func"]
-        title = plot_data["title"]
+        # title = plot_data["title"]
 
         ax = axs[i, 0]
-        ax.plot(x_input, input_func(x_input), color=colors[i])
-        ax.set_title(title)
+        ax.plot(x_input * 1e5, input_func(x_input), color=colors[i])
+        # ax.set_title(title)
         ax.grid(True)
         ax.text(0, 1, tags[i*2], fontsize=12, color='black',
                 ha='left', va='top', transform=ax.transAxes)
@@ -82,11 +78,12 @@ def main():
         else:
             ax.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
             ax.xaxis.get_major_formatter().set_powerlimits((-5, 5))
+            ax.set_xlabel('$x/R_{max}$', fontdict={'fontsize': 14, 'fontweight': 'bold', 'family': 'serif'})
 
 
         focus_func = get_function_focus(target_phase=input_func, R_max=R_max)
         ax = axs[i, 1]
-        ax.plot(x_f, focus_func(x_f), color=colors[i])
+        ax.plot(x_f * 1e4, focus_func(x_f), color=colors[i])
         ax.grid(True)
         ax.text(0, 1, tags[i * 2 + 1], fontsize=12, color='black',
                 ha='left', va='top', transform=ax.transAxes)
@@ -98,11 +95,13 @@ def main():
         else:
             ax.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
             ax.xaxis.get_major_formatter().set_powerlimits((-4, 4))
+            ax.set_xlabel('$x_{f}/\lambda_{e\perp}$', fontdict={'fontsize': 14, 'fontweight': 'bold', 'family': 'serif'})
 
 
-
-    fig.text(0.25, 0.96, r"Imprinted phase $\frac{\varphi(x)}{\pi} (rad)$", ha='center', va='center', fontsize=14)
-    fig.text(0.75, 0.96, r"Wave func at focus $\mathrm{Re}\{\psi(x_f)\}$ (arb. units)", ha='center', va='center', fontsize=14)
+    fig.text(0.3, 0.9, r"$x (\mu m)$", ha='center', va='center', fontsize=12)
+    fig.text(0.73, 0.9, r"$x_{f} (\AA)$", ha='center', va='center', fontsize=12)
+    fig.supylabel(r"Imprinted phase $\varphi(x)/\pi (rad)$", fontsize=14)
+    fig.text(0.5, 0.5, r"Wave func at focus $\mathrm{Re}\{\psi(x_f)\}$ (arb. units)", ha='center', va='center', rotation='vertical', fontsize=14)
 
     # Adjust layout to avoid overlap
     plt.tight_layout(rect=[0, 0, 1, 0.95])
